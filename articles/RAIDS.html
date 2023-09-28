@@ -93,7 +93,7 @@ Astrid Deschênes and Alexander Krasnitz</h4>
     
 <p><br><strong>Package</strong>: <em>RAIDS</em><br><strong>Authors</strong>: Pascal Belleau [cre, aut] (<a href="https://orcid.org/0000-0002-0802-1071" class="external-link uri">https://orcid.org/0000-0002-0802-1071</a>), Astrid Deschênes
 [aut] (<a href="https://orcid.org/0000-0001-7846-6749" class="external-link uri">https://orcid.org/0000-0001-7846-6749</a>), Alexander
-Krasnitz [aut]<br><strong>Version</strong>: 0.99.11<br><strong>Compiled date</strong>: 2023-09-27<br><strong>License</strong>: Apache License (&gt;= 2)<br></p>
+Krasnitz [aut]<br><strong>Version</strong>: 0.99.11<br><strong>Compiled date</strong>: 2023-09-28<br><strong>License</strong>: Apache License (&gt;= 2)<br></p>
 <div class="section level2">
 <h2 id="licensing">Licensing<a class="anchor" aria-label="anchor" href="#licensing"></a>
 </h2>
@@ -321,12 +321,10 @@ inference on real data will take longer to run.</p>
 <span><span class="va">dataDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"RAIDS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#############################################################################</span></span>
-<span><span class="co">## The path and file name for the PED RDS file</span></span>
-<span><span class="co">## will the information about the analyzed samples</span></span>
+<span><span class="co">## Load the information about the profile</span></span>
 <span><span class="co">#############################################################################</span></span>
-<span><span class="va">filePED</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dataDir</span>, <span class="st">"example"</span>, <span class="st">"pedEx.rds"</span><span class="op">)</span></span>
-<span><span class="va">ped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">filePED</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ped</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##     Name.ID Case.ID   Sample.Type Diagnosis     Source</span></span>
 <span><span class="co">## ex1     ex1     ex1 Primary Tumor    Cancer Databank B</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -413,7 +411,7 @@ inference on real data will take longer to run.</p>
 <span>      <span class="co">##   SNP pileup files have been generated: </span></span>
 <span>      <span class="co">##      "snp-pileup" (snp-pileup software) or "generic" (other software)</span></span>
 <span>      <span class="co">#########################################################################</span></span>
-<span>      <span class="fu"><a href="../reference/runExomeAncestry.html">runExomeAncestry</a></span><span class="op">(</span>pedStudy<span class="op">=</span><span class="va">ped</span>, studyDF<span class="op">=</span><span class="va">studyDF</span>,</span>
+<span>      <span class="fu"><a href="../reference/runExomeAncestry.html">runExomeAncestry</a></span><span class="op">(</span>pedStudy<span class="op">=</span><span class="va">demoPedigreeEx1</span>, studyDF<span class="op">=</span><span class="va">studyDF</span>,</span>
 <span>                 pathProfileGDS<span class="op">=</span><span class="va">pathProfileGDS</span>,</span>
 <span>                 pathGeno<span class="op">=</span><span class="va">pathGeno</span>,</span>
 <span>                 pathOut<span class="op">=</span><span class="va">pathOut</span>,</span>
@@ -423,7 +421,7 @@ inference on real data will take longer to run.</p>
 <span>                 syntheticRefDF<span class="op">=</span><span class="va">dataRef</span>,</span>
 <span>                 genoSource<span class="op">=</span><span class="st">"snp-pileup"</span><span class="op">)</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">pathOut</span><span class="op">)</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, <span class="va">ped</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, <span class="va">demoPedigreeEx1</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>      <span class="co">#########################################################################</span></span>
 <span>      <span class="co">## The file containing the ancestry inference (SuperPop column) and </span></span>
@@ -431,7 +429,7 @@ inference on real data will take longer to run.</p>
 <span>      <span class="co">## optimal number of neighbours (K column)</span></span>
 <span>      <span class="co">#########################################################################</span></span>
 <span>      <span class="va">resAncestry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, </span>
-<span>                                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">ped</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">".Ancestry.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">".Ancestry.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resAncestry</span><span class="op">)</span></span>
 <span></span>
 <span>      <span class="co">## Remove temporary files created for this demo</span></span>
@@ -603,12 +601,10 @@ inference on real data will take longer to run.</p>
 <span><span class="va">dataDir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package<span class="op">=</span><span class="st">"RAIDS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#############################################################################</span></span>
-<span><span class="co">## The path and file name for the PED RDS file</span></span>
-<span><span class="co">## will the information about the analyzed samples</span></span>
+<span><span class="co">## Load the information about the profile</span></span>
 <span><span class="co">#############################################################################</span></span>
-<span><span class="va">filePED</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">dataDir</span>, <span class="st">"example"</span>, <span class="st">"pedEx.rds"</span><span class="op">)</span></span>
-<span><span class="va">ped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="va">filePED</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ped</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##     Name.ID Case.ID   Sample.Type Diagnosis     Source</span></span>
 <span><span class="co">## ex1     ex1     ex1 Primary Tumor    Cancer Databank B</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -695,7 +691,7 @@ inference on real data will take longer to run.</p>
 <span>      <span class="co">##   SNP pileup files have been generated: </span></span>
 <span>      <span class="co">##      "snp-pileup" (snp-pileup software) or "generic" (other software)</span></span>
 <span>      <span class="co">#########################################################################</span></span>
-<span>      <span class="fu"><a href="../reference/runRNAAncestry.html">runRNAAncestry</a></span><span class="op">(</span>pedStudy<span class="op">=</span><span class="va">ped</span>, studyDF<span class="op">=</span><span class="va">studyDF</span>,</span>
+<span>      <span class="fu"><a href="../reference/runRNAAncestry.html">runRNAAncestry</a></span><span class="op">(</span>pedStudy<span class="op">=</span><span class="va">demoPedigreeEx1</span>, studyDF<span class="op">=</span><span class="va">studyDF</span>,</span>
 <span>                    pathProfileGDS<span class="op">=</span><span class="va">pathProfileGDS</span>,</span>
 <span>                    pathGeno<span class="op">=</span><span class="va">pathGeno</span>,</span>
 <span>                    pathOut<span class="op">=</span><span class="va">pathOut</span>,</span>
@@ -707,7 +703,7 @@ inference on real data will take longer to run.</p>
 <span>                    genoSource<span class="op">=</span><span class="st">"snp-pileup"</span><span class="op">)</span></span>
 <span>    </span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">pathOut</span><span class="op">)</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, <span class="va">ped</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, <span class="va">demoPedigreeEx1</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span>      <span class="co">#########################################################################</span></span>
 <span>      <span class="co">## The file containing the ancestry inference (SuperPop column) and </span></span>
@@ -715,7 +711,7 @@ inference on real data will take longer to run.</p>
 <span>      <span class="co">## optimal number of neighbours (K column)</span></span>
 <span>      <span class="co">#########################################################################</span></span>
 <span>      <span class="va">resAncestry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">pathOut</span>, </span>
-<span>                                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">ped</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">".Ancestry.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">demoPedigreeEx1</span><span class="op">$</span><span class="va">Name.ID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="st">".Ancestry.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">resAncestry</span><span class="op">)</span></span>
 <span></span>
 <span>      <span class="co">## Remove temporary files created for this demo</span></span>
@@ -864,9 +860,9 @@ in which this document was compiled:</p>
 <span><span class="co">##  [71] restfulr_0.0.15                   nlme_3.1-163                     </span></span>
 <span><span class="co">##  [73] grid_4.3.1                        generics_0.1.3                   </span></span>
 <span><span class="co">##  [75] operator.tools_1.6.3              BSgenome_1.68.0                  </span></span>
-<span><span class="co">##  [77] formula.tools_1.7.1               class_7.3-22                     </span></span>
-<span><span class="co">##  [79] tidyr_1.3.0                       ensembldb_2.24.1                 </span></span>
-<span><span class="co">##  [81] hms_1.1.3                         data.table_1.14.8                </span></span>
+<span><span class="co">##  [77] class_7.3-22                      formula.tools_1.7.1              </span></span>
+<span><span class="co">##  [79] ensembldb_2.24.1                  tidyr_1.3.0                      </span></span>
+<span><span class="co">##  [81] data.table_1.14.8                 hms_1.1.3                        </span></span>
 <span><span class="co">##  [83] xml2_1.3.5                        utf8_1.2.3                       </span></span>
 <span><span class="co">##  [85] XVector_0.40.0                    BiocGenerics_0.46.0              </span></span>
 <span><span class="co">##  [87] GWASExactHW_1.01                  foreach_1.5.2                    </span></span>
@@ -894,9 +890,10 @@ in which this document was compiled:</p>
 <span><span class="co">## [131] blob_1.2.4                        prettyunits_1.2.0                </span></span>
 <span><span class="co">## [133] AnnotationFilter_1.24.0           bitops_1.0-7                     </span></span>
 <span><span class="co">## [135] lme4_1.1-34                       glmnet_4.1-8                     </span></span>
-<span><span class="co">## [137] SeqArray_1.40.1                   purrr_1.0.2                      </span></span>
-<span><span class="co">## [139] crayon_1.5.2                      rlang_1.1.1                      </span></span>
-<span><span class="co">## [141] KEGGREST_1.40.0                   mice_3.16.0</span></span></code></pre>
+<span><span class="co">## [137] SeqArray_1.40.1                   VariantAnnotation_1.46.0         </span></span>
+<span><span class="co">## [139] purrr_1.0.2                       crayon_1.5.2                     </span></span>
+<span><span class="co">## [141] rlang_1.1.1                       KEGGREST_1.40.0                  </span></span>
+<span><span class="co">## [143] mice_3.16.0</span></span></code></pre>
 <p><br><br></p>
 </div>
 <div class="section level2">
