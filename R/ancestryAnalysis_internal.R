@@ -731,8 +731,8 @@ generateProfilePlinkFiles <- function(pathOut, pRAIDS) {
 #' @description TODO
 #'
 #' 
-#' @param syntheticQ a \code{data.frame} an object with all the RAIDS
-#' parameters
+#' @param syntheticQ a \code{data.frame} an with the adixmture proportions 
+#' results for the synthetic data.
 #'
 #' @param pRAIDS a \code{RAIDSparam} an object with all the RAIDS
 #' parameters
@@ -763,7 +763,13 @@ syntheticJSD <- function(syntheticQ, pRAIDS) {
     popSelected <- popSelected[popSelected$id.seq == pos,]
     
     snpgdsClose(gdsReference)
-    
+    # With only one synthetic profile, matR below has two rows and
+    # philentropy::JSD() returns a single value instead of a matrix,
+    # so the diag(jsd.m[...]) indexing fails. Stop with a clear message
+    # instead. Note: this is reached after all ADMIXTURE runs are done.
+    if(! nrow(syntheticQ) > 1){
+        stop("Can't run syntheticJSD with only one synthetic data.")
+    }
     matR <- rbind(as.matrix(syntheticQ[,popSelected$ag]),
                                             as.matrix(syntheticQ[,paste0(popSelected$ag, ".p")]))
     
@@ -782,3 +788,85 @@ syntheticJSD <- function(syntheticQ, pRAIDS) {
     return(syntheticQ)
 }
 
+#' @title Add a column snvKeep to the \code{data.frame} keep 
+#' in the specificSNV(pRAIDS)
+#' 
+#' @description TODO
+#'
+#'
+#' @param pRAIDS a \code{RAIDSparam} an object with all the RAIDS
+#' parameters 
+#' 
+#' @return The function returns a \code{RAIDSparam} an object with all the RAIDS
+#' parameters updated.
+#'
+#'
+#' @details TODO
+#'
+#'
+#' @examples
+#'
+#' dataDir <- system.file("extdata/tests", package="RAIDS")
+#' fileGDS <- file.path(dataDir, "ex1_good_small_1KG.gds")
+#' pRAIDS <- RAIDSparam( fileReferenceGDS=fileGDS)
+#' 
+#' gdsReference <- snpgdsOpen(filename=fileReferenceGDS(pRAIDS))
+#' snp.chromosome <- read.gdsn(node=index.gdsn(gdsReference, "snp.chromosome"))
+#' snp.position <- read.gdsn(node=index.gdsn(gdsReference, "snp.position"))
+#' snpgdsClose(gdsReference)
+#' set.seed(4235)
+#' tmp <- sample(seq_len(length(snp.position )),100)
+#' 
+#' df <- data.frame(snp.chromosome=c(snp.chromosome[tmp], rep(1,10)),
+#'                  snp.position=c(snp.position[tmp], 1987486 +10+seq_len(10))  )
+#' 
+#' specificSNV(pRAIDS) <- df
+#' pRAIDS <- RAIDS:::specificSNVColKeep(pRAIDS)
+#' head(specificSNV(pRAIDS))
+#' tail(specificSNV(pRAIDS))
+#'
+#'
+#' @author Pascal Belleau, Astrid Deschênes and Alexander Krasnitz
+#' @importFrom gdsfmt index.gdsn read.gdsn
+#' @importFrom SNPRelate snpgdsOpen snpgdsClose
+#' @encoding UTF-8
+#' @keywords internal
+specificSNVColKeep <- function(pRAIDS){
+    if(!is.null(specificSNV(pRAIDS))){
+        if(! "snvKeep" %in% colnames(specificSNV(pRAIDS))){
+            gdsReference <- snpgdsOpen(filename=fileReferenceGDS(pRAIDS))
+            snp.chromosome <- read.gdsn(node=index.gdsn(gdsReference, "snp.chromosome"))
+            keepPos <- seq_len(length(snp.chromosome))
+            if("snp.KeepDefault" %in% ls.gdsn(gdsReference) ){
+                keepPos <- read.gdsn(index.gdsn(gdsReference, "snp.KeepDefault"))
+                snp.chromosome <- snp.chromosome[keepPos]
+            }
+            snp.position <- read.gdsn(node=index.gdsn(gdsReference, "snp.position"))[keepPos]
+            
+            snpgdsClose(gdsReference)
+            df <- specificSNV(pRAIDS)
+            df$snp.chromosome <- as.integer(gsub("chr", "", df$snp.chromosome))
+
+            df <- df[!duplicated(df[,c("snp.chromosome", "snp.position")]),]
+            z <- cbind(c(df$snp.chromosome,
+                         snp.chromosome,
+                         df$snp.chromosome),
+                       c(df$snp.position,
+                         snp.position,
+                         df$snp.position),
+                       c(-1 * seq_len(nrow(df)),
+                         rep(0, length(snp.position)),
+                         seq_len(nrow(df))),
+                       c(rep(0, nrow(df)),
+                         seq_len(length(snp.position)),
+                         rep(0, nrow(df))))
+            z <- z[order(z[,1], z[,2], z[,3]),]
+            
+            df$snvKeep <- as.integer(rep(-1, nrow(df)))
+            df$snvKeep[-1*cumsum(z[,3])[z[,3] == 0]] <- as.integer(z[cumsum(z[,3]) < 0 & z[,3] == 0, 4])
+            specificSNV(pRAIDS) <- df
+        }
+    }
+
+    return(pRAIDS)
+}

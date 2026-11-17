@@ -98,7 +98,7 @@ setClassUnion("CharacterOrNULL", members = c("character", "NULL"))
 #' If 'genoSource' is "bam", then "*.bam" (the file needs to be indexed with a
 #' existing corresponding "*.bai" file). Default: \code{NULL}.
 #' 
-#' @slot profileFileGeno TODO
+#' @slot profileFileGeno not used in the current version
 #' 
 #' @slot pathProfileGDS a single \code{character} string representing the 
 #' path to the directory where the GDS Profile files will be created. If 
@@ -128,11 +128,12 @@ setClassUnion("CharacterOrNULL", members = c("character", "NULL"))
 #' identifier for the batch. Beware, this field is not stored anymore. 
 #' Default: \code{1L}.
 #' 
-#' @slot prefix a single \code{character} string representing TODO.
-#' Default: \code{"1"}.
+#' @slot prefix a single \code{character} string representing at the
+#' beginning of the synthetic name id. Default: \code{"1"}.
 #' 
-#' @slot nbSim a positive \code{integer} representing TODO. 
-#' Default: \code{1L}.
+#' @slot nbSim a positive \code{integer} representing number of 
+#' replicated synthitic data (restricted to 1 for 
+#' the moment). Default: \code{1L}.
 #' 
 #' @slot posOffset a single \code{integer} that is added to the SNP position to
 #' switch from 0-based to 1-based coordinate when needed (or reverse).
@@ -582,8 +583,8 @@ setValidity("RAIDSparam",
         }
 
         ## Validate the nbSim parameter
-        if (length(object@nbSim) != 1 || object@nbSim < 1L) {
-            return("'nbSim' slot must have one positive integer.")
+        if ( length(object@nbSim) != 1 || is.na(object@nbSim) || object@nbSim != 1L) { # || object@nbSim < 1L
+            return("'nbSim' slot must be 1 for the moment.")# have one positive integer
         }
 
         ## Validate the posOffset parameter
@@ -4625,7 +4626,7 @@ setGeneric("nbSim<-", function(x, value) standardGeneric("nbSim<-"))
 #' paramDemo <- RAIDSparam()
 #' 
 #' ## Assign a new value to the nbSim slot in the object
-#' nbSim(paramDemo) <- 33L
+#' nbSim(paramDemo) <- 1L
 #' 
 #' @author Pascal Belleau, Astrid Deschênes and Alexander Krasnitz
 #' @encoding UTF-8
@@ -6737,8 +6738,9 @@ setMethod("verbose<-", "RAIDSparam", function(x, value) {
 #' @param prefix a single \code{character} string representing TODO.
 #' Default: \code{"1"}.
 #' 
-#' @param nbSim a positive \code{integer} representing TODO. 
-#' Default: \code{1L}.
+#' @param nbSim a positive \code{integer} representing the number  
+#' of replicated simulation (Only 1 is supported for the 
+#' moment). Default: \code{1L}.
 #' 
 #' @param posOffset a single \code{integer} that is added to the SNP position 
 #' to switch from 0-based to 1-based coordinate when needed (or reverse).
@@ -6902,7 +6904,7 @@ setMethod("verbose<-", "RAIDSparam", function(x, value) {
 #' ## New object of class "RAIDSparam" with non-default parameters
 #' newParam2 <- RAIDSparam(studyDF=data.frame(study.id="Test1",
 #'     study.desc="Test Desc", study.platform="Test", stringsAsFactors=FALSE),
-#'     nbSim=12L, minCov=8L)
+#'     nbSim=1L, minCov=8L)
 #' 
 #' @author Pascal Belleau, Astrid Deschênes and Alexander Krasnitz
 #' @encoding UTF-8

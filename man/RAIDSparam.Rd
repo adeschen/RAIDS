@@ -167,8 +167,9 @@ Default: \code{1L}.}
 \item{prefix}{a single \code{character} string representing TODO.
 Default: \code{"1"}.}
 
-\item{nbSim}{a positive \code{integer} representing TODO.
-Default: \code{1L}.}
+\item{nbSim}{a positive \code{integer} representing the number
+of replicated simulation (Only 1 is supported for the
+moment). Default: \code{1L}.}
 
 \item{posOffset}{a single \code{integer} that is added to the SNP position
 to switch from 0-based to 1-based coordinate when needed (or reverse).
@@ -336,7 +337,7 @@ newParam1 <- RAIDSparam()
 ## New object of class "RAIDSparam" with non-default parameters
 newParam2 <- RAIDSparam(studyDF=data.frame(study.id="Test1",
     study.desc="Test Desc", study.platform="Test", stringsAsFactors=FALSE),
-    nbSim=12L, minCov=8L)
+    nbSim=1L, minCov=8L)
 
 }
 \author{

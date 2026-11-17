@@ -583,7 +583,7 @@ test_that("create a RAIDSparam class with multiple strings for prefix parameter 
 test_that("create a RAIDSparam class with multiple numbers for nbSim parameter should generate an error", {
 
     expect_error(new("RAIDSparam", nbSim=c(1L, 22L)),
-        "'nbSim' slot must have one positive integer.")
+        "'nbSim' slot must be 1 for the moment.")
 })
 
 test_that("create a RAIDSparam class with multiple integers for posOffset parameter should generate an error", {
@@ -1152,7 +1152,7 @@ test_that("create a RAIDSparam class with all prefix setter and getter should re
 
 test_that("create a RAIDSparam class with all nbSim setter and getter should return an object", {
 
-    exp <- 4L
+    exp <- 1L
 
     paramTest <- RAIDSparam()
     nbSim(paramTest) <- exp
@@ -1165,7 +1165,7 @@ test_that("create a RAIDSparam class with all nbSim setter and getter should ret
 
 test_that("create a RAIDSparam class with all nbSim setter and getter should return an object", {
 
-    exp <- 4L
+    exp <- 1L
 
     paramTest <- RAIDSparam()
     nbSim(paramTest) <- exp
@@ -1807,7 +1807,7 @@ test_that("create a RAIDSparam function with all non-default parameters should r
         stringsAsFactors=FALSE, row.names=c("SampleE")), chrInfo=exp_chrInfo,
         studyType="GeneAware", genoSource="bam", blockTypeId="E",
         reference="1k_hgdpV0.1", inferenceType="haploAdmixture", batch=12L,
-        prefix="3", nbSim=11L, posOffset=0L, minProb=0.889, minCov=20L,
+        prefix="3", nbSim=1L, posOffset=0L, minProb=0.889, minCov=20L,
         pruningMethod="dprime", np=2L, pRecomb=0.21, seqError=0.12,
         seqErrorSyn=0.02, pathProfileGDS=dataDir, fileReferenceGDS=fileGDS,
         fileReferenceAnnotGDS=fileGDS,
@@ -1886,7 +1886,7 @@ test_that("create a RAIDSparam function with all non-default parameters should r
     expect_equal(paramTest@prefix, "3")
 
     ## Test nbSim
-    expect_true(paramTest@nbSim == 11L)
+    expect_true(paramTest@nbSim == 1L)
 
     ## Test posOffset
     expect_true(paramTest@posOffset == 0L)

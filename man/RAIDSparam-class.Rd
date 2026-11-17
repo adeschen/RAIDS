@@ -96,7 +96,7 @@ is "VCF". If 'genoSource' is "generic" or "snp-pileup", then "}.txt.gz".
 If 'genoSource' is "bam", then "\emph{.bam" (the file needs to be indexed with a
 existing corresponding "}.bai" file). Default: \code{NULL}.}
 
-\item{\code{profileFileGeno}}{TODO}
+\item{\code{profileFileGeno}}{not used in the current version}
 
 \item{\code{pathProfileGDS}}{a single \code{character} string representing the
 path to the directory where the GDS Profile files will be created. If
@@ -126,11 +126,12 @@ Default: \code{NULL}.}
 identifier for the batch. Beware, this field is not stored anymore.
 Default: \code{1L}.}
 
-\item{\code{prefix}}{a single \code{character} string representing TODO.
-Default: \code{"1"}.}
+\item{\code{prefix}}{a single \code{character} string representing at the
+beginning of the synthetic name id. Default: \code{"1"}.}
 
-\item{\code{nbSim}}{a positive \code{integer} representing TODO.
-Default: \code{1L}.}
+\item{\code{nbSim}}{a positive \code{integer} representing number of
+replicated synthitic data (restricted to 1 for
+the moment). Default: \code{1L}.}
 
 \item{\code{posOffset}}{a single \code{integer} that is added to the SNP position to
 switch from 0-based to 1-based coordinate when needed (or reverse).

@@ -26,7 +26,7 @@ A function for replacement of nbSim slot in a
 paramDemo <- RAIDSparam()
 
 ## Assign a new value to the nbSim slot in the object
-nbSim(paramDemo) <- 33L
+nbSim(paramDemo) <- 1L
 
 }
 \author{
